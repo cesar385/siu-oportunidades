@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Consulta de Legajo</title>
+  <style>
+    body {
+      background-color: #F6F6F6;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #0a7cd1;
+      text-align: center;
+      font-size: 24px;
+      margin-top: 0;
+    }
+
+    .form-wrapper {
+      background-color: #FFFFFF;
+      padding: 20px;
+      border: 1px solid #CCCCCC;
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #CCCCCC;
+      border-radius: 3px;
+    }
+
+    .submit-button {
+      background-color: #0a7cd1;
+      color: #FFFFFF;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .back-button {
+      background-color: #CCCCCC;
+      color: #FFFFFF;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Consulta de Legajo</h1>
+    <div class="form-wrapper">
+      <form action="consulta_estudiantes.html" method="GET">
+        <label for="numero">Número de Legajo:</label>
+        <input type="text" id="numero" name="numero" required>
+        <input type="submit" value="Consultar" class="submit-button">
+      </form>
+      <button onclick="window.history.back()" class="back-button">Volver</button>
+    </div>
+  </div>
+</body>
+</html>

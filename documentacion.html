@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Documentación del Estudiante</title>
+    <style>
+        /* Estilos CSS para la apariencia de la página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        
+        h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+        
+        /* Otros estilos CSS según tus necesidades */
+    </style>
+    <script>
+        function cargarDocumentacion(documento, tipoDocumento) {
+            // Lógica para cargar el documento según el tipo
+            if (tipoDocumento === "partida") {
+                // Lógica para cargar la partida de nacimiento
+                alert("Cargando partida de nacimiento para el documento: " + documento);
+            } else if (tipoDocumento === "cuil") {
+                // Lógica para cargar la constancia de CUIL
+                alert("Cargando constancia de CUIL para el documento: " + documento);
+            } else if (tipoDocumento === "estudios") {
+                // Lógica para cargar la constancia de estudios primarios
+                alert("Cargando constancia de estudios primarios para el documento: " + documento);
+            }
+        }
+
+        function verificarDocumentacionCompleta() {
+            // Lógica para verificar si se ha cargado toda la documentación del estudiante
+            // Aquí puedes implementar tu propia lógica para determinar si se han cargado todos los archivos
+            var documentacionCompleta = true; // Ejemplo: Supongamos que la documentación está completa
+            
+            if (documentacionCompleta) {
+                alert("Lectura Completa"); // Mostrar mensaje de lectura completa
+            } else {
+                alert("Lectura Incompleta"); // Mostrar mensaje de lectura incompleta
+            }
+        }
+        
+        function handleFileUpload(input) {
+            var file = input.files[0];
+            alert("Cargando archivo: " + file.name);
+            // Aquí puedes implementar la lógica para procesar el archivo cargado
+            // Puedes acceder a la información del archivo a través de la variable 'file'
+        }
+        
+        function volverPaginaAnterior() {
+            window.history.back();
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>
+            <button onclick="volverPaginaAnterior()" style="float: left;">Volver</button>
+            Documentación del Estudiante
+        </h1>
+    </div>
+    
+    <div class="container">
+        <h2>Documentos del Estudiante</h2>
+        
+        <ul>
+            <li><strong>Documento:</strong> <input type="file" onchange="handleFileUpload(this)"></li>
+            <li><strong>Partida de Nacimiento:</strong> <input type="file" onchange="handleFileUpload(this)"></li>
+            <li><strong>Constancia de CUIL:</strong> <input type="file" onchange="handleFileUpload(this)"></li>
+            <li><strong>Constancia de Estudios Primarios:</strong> <input type="file" onchange="handleFileUpload(this)"></li>
+            <!-- Agrega aquí más detalles y documentos según tus necesidades -->
+        </ul>
+        
+        <button onclick="verificarDocumentacionCompleta()">Ver Estado de la Documentación</button>
+    </div>
+    
+    <script>
+        // Obtener el número de documento del estudiante de los parámetros de la URL
+        var params = new URLSearchParams(window.location.search);
+        var documento = params.get("documento");
+        
+        // Asignar el número de documento al elemento correspondiente
+        document.getElementById("documento").textContent = documento;
+    </script>
+</body>
+</html>

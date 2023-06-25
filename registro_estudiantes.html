@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SIU-Guaraní</title>
+    <style>
+        /* Estilos CSS para la apariencia de la página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header img {
+            max-width: 200px;
+            height: auto;
+            margin: 10px;
+        }
+        
+        .header .datetime {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        
+        input[type="button"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .button-container button {
+            margin: 0 auto;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        // Generar número de legajo automáticamente al cargar la página
+        window.addEventListener('DOMContentLoaded', function() {
+            var legajo = Math.floor(Math.random() * 10000) + 1000;
+            document.getElementById("legajo").value = legajo;
+        });
+        
+        // Redireccionar a la sección de estudiantes al hacer clic en "Registrar"
+        function registrarEstudiante() {
+            var nombre = document.getElementById("nombre").value;
+            var apellido = document.getElementById("apellido").value;
+            var documento = document.getElementById("documento").value;
+            var cuil = document.getElementById("cuil").value;
+            var legajo = document.getElementById("legajo").value;
+            
+            // Construir el objeto de estudiante
+            var estudiante = {
+                nombre: nombre,
+                apellido: apellido,
+                documento: documento,
+                cuil: cuil,
+                legajo: legajo
+            };
+            
+            // Obtener la lista de estudiantes registrados del almacenamiento local
+            var estudiantes = JSON.parse(localStorage.getItem("estudiantes")) || [];
+            
+            // Agregar el estudiante a la lista
+            estudiantes.push(estudiante);
+            
+            // Guardar la lista actualizada en el almacenamiento local
+            localStorage.setItem("estudiantes", JSON.stringify(estudiantes));
+            
+            // Redireccionar a la sección de estudiantes
+            window.location.href = "estudiantes.html";
+        }
+        
+        // Volver a la página anterior
+        function volver() {
+            history.back();
+        }
+        
+        // Actualizar la fecha y hora actual cada segundo
+        function actualizarFechaHora() {
+            var datetimeElement = document.getElementById("datetime");
+            setInterval(function() {
+                var datetime = new Date();
+                datetimeElement.textContent = datetime.toLocaleString();
+            }, 1000);
+        }
+        
+        // Ejecutar la función para actualizar la fecha y hora actual al cargar la página
+        window.addEventListener('DOMContentLoaded', function() {
+            actualizarFechaHora();
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <img src="logo1.png" alt="Logo 1">
+        <img src="logo2.png" alt="Logo 2">
+        <img src="logo3.png" alt="Logo 3">
+        <div id="datetime" class="datetime"></div>
+        <h1>SIU-Guaraní</h1>
+    </div>
+    
+    <div class="container">
+        <!-- Formulario de registro -->
+        <h2>Registro de Estudiante</h2>
+        <form>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required>
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            
+            <label for="documento">Número de Documento:</label>
+            <input type="text" id="documento" name="documento" required>
+            
+            <label for="cuil">CUIL:</label>
+            <input type="text" id="cuil" name="cuil" required>
+            
+            <label for="legajo">Legajo:</label>
+            <input type="text" id="legajo" name="legajo" readonly>
+            
+            <input type="button" value="Registrar" onclick="registrarEstudiante()">
+        </form>
+        
+        <!-- Botón para volver a la página anterior -->
+        <div class="button-container">
+            <button onclick="volver()">Volver</button>
+        </div>
+    </div>
+</body>
+</html>

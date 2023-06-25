@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Listado de Estudiantes</title>
+  <style>
+    /* Estilo de la tabla y otros elementos */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #e6e6e6;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .export-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #2a7fff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .export-button:hover {
+      background-color: #0c6bd1;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+    }
+
+    .back-button {
+      background-color: #2a7fff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background-color: #0c6bd1;
+    }
+  </style>
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script>
+    function exportToExcel() {
+      var table = document.getElementById("studentTable");
+      var wb = XLSX.utils.table_to_book(table, {sheet: "Estudiantes"});
+      XLSX.writeFile(wb, "listado_estudiantes.xlsx");
+    }
+  </script>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-container">
+      <img class="logo" src="logo1.png" alt="Logo 1">
+      <img class="logo" src="logo2.png" alt="Logo 2">
+      <img class="logo" src="logo3.png" alt="Logo 3">
+    </div>
+    <button class="back-button" onclick="window.history.back()">Volver</button>
+  </div>
+  <h1>Listado de Estudiantes Registrados</h1>
+  <table id="studentTable">
+    <tr>
+      <th>Apellido</th>
+      <th>Nombre</th>
+      <th>Número de Documento</th>
+      <th>CUIL</th>
+      <th>Legajo</th>
+    </tr>
+
+    </tr>
+    <!-- Repite el patrón de la fila anterior para agregar más estudiantes -->
+    <!-- Limitado a 100 estudiantes -->
+  </table>
+  <br>
+  <button class="export-button" onclick="exportToExcel()">Exportar a Excel</button>
+</body>
+</html>

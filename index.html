@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SIU Guarani</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2b2b2b;
+      margin-top: 30px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+
+    .button {
+      margin: 0 10px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #ffffff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      max-height: 150px;
+      margin: 0 10px;
+    }
+
+    .date-time {
+      text-align: center;
+      font-size: 16px;
+      color: #777777;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="logo1.png" alt="Logo 1">
+    <img src="logo2.png" alt="Logo 2">
+    <img src="logo3.png" alt="Logo 3">
+  </div>
+  <h1></h1>
+  <div class="container">
+    <button class="button" onclick="registroEstudiantes()">Registro de Estudiantes</button>
+    <button class="button" onclick="consultaLegajo()">Consulta de Legajo</button>
+  </div>
+  <div class="date-time" id="date-time"></div>
+
+  <script>
+    function registroEstudiantes() {
+      // Lógica para redireccionar a la página de registro de estudiantes
+      window.location.href = "registro_estudiantes.html";
+    }
+
+    function consultaLegajo() {
+      // Lógica para redireccionar a la página de consulta de legajo
+      window.location.href = "legajos.html";
+    }
+
+    // Obtener la fecha y hora actual y mostrarla en la página
+    function updateDateTime() {
+      var dateTimeElement = document.getElementById("date-time");
+      var currentDateTime = new Date();
+      var formattedDateTime = currentDateTime.toLocaleString();
+      dateTimeElement.innerHTML = "Fecha y hora actual: " + formattedDateTime;
+    }
+
+    // Actualizar la fecha y hora cada segundo
+    setInterval(updateDateTime, 1000);
+
+    // Mostrar la fecha y hora actual al cargar la página
+    updateDateTime();
+  </script>
+</body>
+</html>

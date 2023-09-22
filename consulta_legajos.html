@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Legajos</title>
+    <style>
+        /* Estilos para el cuerpo de la página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilos para el contenedor principal */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para el encabezado */
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Estilos para las etiquetas de formulario */
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Estilos para los campos de entrada de texto */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Estilos para el botón de consulta */
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para la tabla de resultados */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Estilos para el botón de impresión */
+        #btn-imprimir {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+            display: none;
+        }
+
+        #btn-imprimir:hover {
+            background-color: #3e2ed1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Consulta de Legajos</h1>
+        <form id="consulta-form">
+            <div>
+                <label for="legajo">Número de Legajo:</label>
+                <input type="text" id="legajo" name="legajo" placeholder="Ingrese el número de legajo" required>
+            </div>
+            <div>
+                <button type="submit">Consultar</button>
+            </div>
+        </form>
+        <div id="resultado" style="display: none;">
+            <h2>Resultados</h2>
+            <h3>Datos del Estudiante</h3>
+            <table>
+                <tr>
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>Documento</th>
+                    <th>CUIL</th>
+                </tr>
+                <tr id="datos-estudiante">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            
+            <h3>Datos de la Institución</h3>
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>CUE</th>
+                    <th>Módulo que Cursa</th>
+                </tr>
+                <tr id="datos-institucion">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            
+            <h3>Datos de Materias</h3>
+            <table>
+                <tr>
+                    <th>Materia</th>
+                    <th>Nota</th>
+                </tr>
+                <tbody id="tabla-resultados">
+                    <!-- Aquí se mostrarán los resultados de la consulta -->
+                </tbody>
+            </table>
+
+            <!-- Botón de impresión -->
+            <button id="btn-imprimir">Imprimir</button>
+        </div>
+    </div>
+
+    <script>
+        // Almacena la información de los estudiantes y sus resultados. Reemplazar legajo1 por nro de legajo estudiante
+        const estudiantes = {
+            "5916": {
+                estudiante: {
+                    apellido: "Pérez",
+                    nombre: "Juan",
+                    documento: "12345678",
+                    cuil: "20-12345678-1",
+                },
+                institucion: {
+                    nombre: "Programa Oportunidades",
+                    cue: "300351100",
+                    añoCursa: "Módulo I",
+                },
+                materias: [
+                    { materia: "Lenguas", nota: 8 },
+                    { materia: "Matemática", nota: 8 },
+                    { materia: "Ciencias Sociales", nota: 7 },
+                    { materia: "Ciencias Naturales", nota: 9 },
+                ],
+            },
+            "7891": {
+                estudiante: {
+                    apellido: "Gómez",
+                    nombre: "María",
+                    documento: "23456789",
+                    cuil: "20-23456789-2",
+                },
+                institucion: {
+                    nombre: "Colegio ABC",
+                    cue: "300351101",
+                    añoCursa: "Módulo II",
+                },
+                materias: [
+                    { materia: "Historia", nota: 9 },
+                    { materia: "Geografía", nota: 7 },
+                    { materia: "Biología", nota: 8 },
+                    { materia: "Física", nota: 9 },
+                ],
+            },
+        };
+
+        // Manejo del formulario
+        const consultaForm = document.getElementById("consulta-form");
+        const resultadoDiv = document.getElementById("resultado");
+        const tablaResultados = document.getElementById("tabla-resultados");
+        const datosEstudiante = document.getElementById("datos-estudiante");
+        const datosInstitucion = document.getElementById("datos-institucion");
+        const btnImprimir = document.getElementById("btn-imprimir");
+
+        consultaForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            // Obtén el número de legajo ingresado
+            const legajo = document.getElementById("legajo").value;
+
+            // Verifica si el legajo existe en la base de datos de estudiantes
+            if (estudiantes.hasOwnProperty(legajo)) {
+                // Si existe, muestra los resultados almacenados
+                mostrarResultados(estudiantes[legajo]);
+            } else {
+                // Si no existe, muestra un mensaje de error
+                mostrarError("El legajo ingresado no se encuentra en la base de datos.");
+            }
+        });
+
+        // Función para mostrar los resultados en la página
+        function mostrarResultados(resultados) {
+            // Actualiza los datos del estudiante
+            datosEstudiante.children[0].textContent = resultados.estudiante.apellido;
+            datosEstudiante.children[1].textContent = resultados.estudiante.nombre;
+            datosEstudiante.children[2].textContent = resultados.estudiante.documento;
+            datosEstudiante.children[3].textContent = resultados.estudiante.cuil;
+
+            // Actualiza los datos de la institución
+            datosInstitucion.children[0].textContent = resultados.institucion.nombre;
+            datosInstitucion.children[1].textContent = resultados.institucion.cue;
+            datosInstitucion.children[2].textContent = resultados.institucion.añoCursa;
+
+            // Limpia la tabla de resultados si hay datos anteriores
+            while (tablaResultados.firstChild) {
+                tablaResultados.removeChild(tablaResultados.firstChild);
+            }
+
+            // Agrega los resultados de las materias a la tabla
+            resultados.materias.forEach((resultado) => {
+                const fila = document.createElement("tr");
+                const materiaCell = document.createElement("td");
+                const notaCell = document.createElement("td");
+
+                materiaCell.textContent = resultado.materia;
+                notaCell.textContent = resultado.nota;
+
+                fila.appendChild(materiaCell);
+                fila.appendChild(notaCell);
+                tablaResultados.appendChild(fila);
+            });
+
+            // Muestra los resultados y el botón de impresión
+            resultadoDiv.style.display = "block";
+            btnImprimir.style.display = "block";
+        }
+
+        // Función para mostrar un mensaje de error
+        function mostrarError(mensaje) {
+            // Oculta los resultados y el botón de impresión
+            resultadoDiv.style.display = "none";
+            btnImprimir.style.display = "none";
+
+            // Muestra el mensaje de error en lugar de los resultados
+            datosEstudiante.children[0].textContent = mensaje;
+            datosEstudiante.children[1].textContent = "";
+            datosEstudiante.children[2].textContent = "";
+            datosEstudiante.children[3].textContent = "";
+
+            // Limpia la tabla de resultados si hay datos anteriores
+            while (tablaResultados.firstChild) {
+                tablaResultados.removeChild(tablaResultados.firstChild);
+            }
+        }
+
+        // Función para imprimir la página
+        btnImprimir.addEventListener("click", function () {
+            window.print();
+        });
+    </script>
+</body>
+</html>
